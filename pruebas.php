@@ -1,0 +1,4 @@
+<? 
+    $lsaijdsa = 'sakasjh';
+    echo $lsaijdsa;
+?> 
