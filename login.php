@@ -1,5 +1,25 @@
 <?php 
-    
+    if( !isset($_REQUEST['email']) && !isset($_REQUEST['pswd']) ){
+        echo('Por favor llene todos los campos');
+    }else{
+
+        include './classes/database.php';
+        $database = new Database();
+
+        $email = $_REQUEST['email'];
+        $pswd = $_REQUEST['pswd'];
+
+        $get_user_query = 'SELECT * FROM usuario WHERE email = :email';
+        $params = [':email' => $email];
+        $database->do_query($get_user_query, $params);
+
+        if( $database->query_results_num >= 1 ){
+            header('location: ./index.php');
+        }else{
+            echo('Revise las credenciales');
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -30,14 +50,14 @@
 
     <div class="container mt-5">
         <h1 class="text-center" style="color: var(--blue);">Iniciar Sesión</h1>
-        <form class="w-50 mx-auto">
+        <form class="w-50 mx-auto" method="POST" action="./login.php">
             <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Ingresa tu correo">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
+                <input type="password" class="form-control" name="pswd" id="password" placeholder="Ingresa tu contraseña">
             </div>
             <button type="submit" class="btn btn-primary" style="background-color: var(--blue);">Entrar</button>
         </form>
