@@ -1,45 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php include './views/header.php'  ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Badminton para todos</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/index.css">
-</head>
-
-<body>
-    <nav class="navbar navbar-light bg-light-blue">
-        <a class="navbar-brand" href="./">
-            <img style="width: 60px;" src="./assets/badminton-icon.png" alt="Logo Badminton" srcset="">
-            Badminton para todos
-        </a>
-        <ul class="nav">
-            <li>
-                <a class="nav-item nav-link" href="./password.php">Contraseña</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="./login.php">Entrar</a></li>
-            <li class="nav-item"><a class="nav-link" href="./about-us.php">Sobre Nosotros</a></li>
-        </ul>
-    </nav>
-
-    <div class="container mt-5">
+    <div class="container my-3">
         <h1 class="text-center" style="color: var(--blue);">Registro</h1>
-        <form class="w-50 mx-auto">
-            <div class="mb-3">
-                <label for="name" class="form-label">Nombre Completo</label>
-                <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre">
+        <form method="post" action="./classes/user.php" class="w-50 mx-auto">
+            <div class="mb-2">
+                <label for="name" class="form-label">Nombres</label>
+                <input name="name" type="text" class="form-control" id="name" placeholder="Ingresa tu nombre">
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
+                <label for="name" class="form-label">Apellidos</label>
+                <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Ingresa tu apellido">
+            </div>
+            <div class="mb-2">
                 <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo">
+                <input name="email" type="email" class="form-control" id="email" placeholder="Ingresa tu correo">
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
+                <input name="pswd" type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
             </div>
+            <div class="mb-2">
+                <label for="captcha" class="form-label">Captcha</label>
+                <input name="captcha" type="captcha" class="form-control" placeholder="Ingresa el resultado">
+            </div>
+            <select name="gender" class="form-select mb-2" aria-label="Default select example">
+                <option value="h">Hombre</option>
+                <option value="m">Mujer</option>
+            </select>
             <button type="submit" class="btn btn-primary" style="background-color: var(--blue);">Registrarse</button>
+            <input name="action" value="register" type="hidden">
         </form>
     </div>
 </body>
