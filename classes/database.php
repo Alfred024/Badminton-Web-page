@@ -1,5 +1,5 @@
 <?php
-    require "config/config.php";
+    require "../config/config.php";
 
     class Database{
         var $connection;
@@ -35,17 +35,17 @@
                     $stmt->bindValue($key, $value);
                 }
                 $stmt->execute();
-                if (stripos($query, 'select') !== false) {
-                    $this->query_results = $stmt;
-                    $this->query_results_num = $stmt->rowCount();
-                }
+                // if (stripos($query, 'select') !== false) {
+                //     $this->query_results = $stmt;
+                //     $this->query_results_num = $stmt->rowCount();
+                // }
+                $this->query_results = $stmt;
+                $this->query_results_num = $stmt->rowCount();
                 $this->close_connection();
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
-
-
     }
 
 ?>

@@ -4,16 +4,27 @@
 ul{
     list-style: none;
 }
+.anchor-default, .anchor-default:link, .anchor-default:visited{
+	text-decoration: inherit;
+	cursor: pointer;
+}
 
 :root{
+    --white: snow;
     --blue: #87A2FF;
     --light-blue: #C4D7FF; 
     --peach: #FFD7C4;
     --yellow: #FFF4B5;
 }
 
+.color-snow{
+    color: var(--white) !important;
+}
 .color-blue{
     color: var(--blue);
+}
+.bg-blue{
+    background: var(--blue);
 }
 .bg-light-blue{
     background: var(--light-blue);

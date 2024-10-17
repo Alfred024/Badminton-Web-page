@@ -1,3 +1,9 @@
+<?php 
+    // Cácluclo de captcha
+    $num1 = 10;
+    $num2 = 20;
+?>
+
 <?php include './views/header.php'  ?>
 
     <div class="container my-3">
@@ -21,14 +27,36 @@
             </div>
             <div class="mb-2">
                 <label for="captcha" class="form-label">Captcha</label>
-                <input name="captcha" type="captcha" class="form-control" placeholder="Ingresa el resultado">
+                <input name="captcha" type="captcha" class="form-control" placeholder="Ingresa el resultado <?php $num1+$num2 ?> aslkd">
             </div>
             <select name="gender" class="form-select mb-2" aria-label="Default select example">
                 <option value="h">Hombre</option>
                 <option value="m">Mujer</option>
+                <option value="o">Otro</option>
             </select>
-            <button type="submit" class="btn btn-primary" style="background-color: var(--blue);">Registrarse</button>
+            <button type="submit" class="btn bg-blue color-snow">Registrarse</button>
             <input name="action" value="register" type="hidden">
+
+            <?php 
+                if (isset($_REQUEST['m'])) {
+                    $message = $_REQUEST['m'];
+                    
+                    switch ($message) {
+                        case '1':  
+                            echo ('<p class="text-end color-blue"><b>Captcha incorrecto, favor de validar.</b></p>');
+                            break;
+                        case '2': 
+                            echo ('<p class="text-end color-blue"><b>El email ya está registrado.</b></p>');
+                            break;
+                        case '3':  
+                            echo ('<p class="text-end color-blue"><b>Favor de llenar todos los campos.</b></p>');
+                            break;
+                        case '4':  
+                            echo ('<p class="text-end color-blue"><b>Usuario registrado exitosamente!!.</b></p>');
+                            break;
+                    }
+                }
+            ?>
         </form>
     </div>
 </body>

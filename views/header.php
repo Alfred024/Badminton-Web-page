@@ -18,8 +18,8 @@
         <ul class="nav">
             <li class="nav-item"><a class="nav-link" href="./login.php">Login</a></li>
             <li class="nav-item"><a class="nav-link" href="./register.php">Registro</a></li>
-            <li>
-                <a class="nav-item nav-link" href="./password.php">Recuperar contraseña</a>
+            <li class="nav-item">
+                <a class="nav-link color-snow" href="./password.php">Recuperar contraseña</a>
             </li>
             <li class="nav-item"><a class="nav-link" href="./about-us.php">Sobre Nosotros</a></li>
         </ul>
