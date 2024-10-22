@@ -12,6 +12,7 @@ ul{
 :root{
     --white: snow;
     --blue: #87A2FF;
+    --dark-blue: #586d99;
     --light-blue: #C4D7FF; 
     --peach: #FFD7C4;
     --yellow: #FFF4B5;
@@ -22,6 +23,9 @@ ul{
 }
 .color-blue{
     color: var(--blue);
+}
+.color-dark-blue{
+    color: var(--dark-blue);
 }
 .bg-blue{
     background: var(--blue);
