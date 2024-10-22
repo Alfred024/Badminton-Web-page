@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     include './database.php';
     
     class User extends Database{
@@ -36,9 +37,18 @@
 
                     $get_user_query = 'SELECT * FROM usuario WHERE email = :email and clave = :pswd';
                     $get_params = [':email' => $email, ':pswd' => $pswd];
-                    $this->do_query($get_user_query, $get_params);
+                    $this->get_query($get_user_query, $get_params);
                     if( $this->query_results_num == 1 ){
-                        header("location: ../index.php"); 
+                        $user_rol = $this->query_results['id_rol'];
+                        if($user_rol == 1){
+                            $_SESSION['admin'] = true;
+                            $_SESSION['user_email'] = $this->query_results['email'];
+                            $_SESSION['user_name'] = $this->query_results['nombres'];
+
+                            header("location: ../admin/index.php");
+                        }else{
+                            header("location: ../user/index.php"); 
+                        }
                     }else{
                         header("location: ../login.php?m=4");
                     }

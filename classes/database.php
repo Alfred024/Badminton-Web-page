@@ -46,6 +46,23 @@
                 echo $e->getMessage();
             }
         }
+
+        # $fetch_mode = PDO::FETCH_ASSOC es paraq devolver el query como array asociativo
+        function get_query($query = '', $query_params = [], $fetch_mode = PDO::FETCH_ASSOC){
+            try {
+                $this->connect();
+                $stmt = $this->connection->prepare($query);
+                foreach ($query_params as $key => $value) {
+                    $stmt->bindValue($key, $value);
+                }
+                $stmt->execute();
+                $this->query_results_num = $stmt->rowCount();
+                $this->query_results = $stmt->fetchAll($fetch_mode)[0];
+                $this->close_connection();
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
     }
 
 ?>
