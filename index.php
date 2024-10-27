@@ -1,4 +1,9 @@
-<?php include './views/header.php'; ?>
+<?php 
+    session_start();
+    session_destroy();
+    
+    include './views/header.php'; 
+?>
 
 
 <?php

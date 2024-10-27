@@ -17,6 +17,6 @@
         </a>
         <ul class="nav">
             <li class="nav-item"><a class="nav-link" href="./roles.php">Roles</a></li>
-            <li class="nav-item"><a class="nav-link" href="../">Cerrar sesión</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.php">Cerrar sesión</a></li>
         </ul>
     </nav>
