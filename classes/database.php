@@ -52,12 +52,15 @@
             try {
                 $this->connect();
                 $stmt = $this->connection->prepare($query);
-                foreach ($query_params as $key => $value) {
-                    $stmt->bindValue($key, $value);
+
+                if (count($query_params) > 1){
+                    foreach ($query_params as $key => $value) {
+                        $stmt->bindValue($key, $value);
+                    }
                 }
                 $stmt->execute();
                 $this->query_results_num = $stmt->rowCount();
-                $this->query_results = $stmt->fetchAll($fetch_mode)[0];
+                $this->query_results = $stmt->fetchAll($fetch_mode);
                 $this->close_connection();
             } catch (PDOException $e) {
                 echo $e->getMessage();

@@ -1,6 +1,6 @@
 <?php 
-    session_start();
     include './database.php';
+    session_start();
     
     class User extends Database{
 
@@ -10,6 +10,9 @@
             switch ($action_case) {
                 case 'login':
                     $this->login();
+                    break;
+                case 'logout':
+                    $this->logout();
                     break;
                 case 'register':
                     $this->register();
@@ -39,11 +42,11 @@
                     $get_params = [':email' => $email, ':pswd' => $pswd];
                     $this->get_query($get_user_query, $get_params);
                     if( $this->query_results_num == 1 ){
-                        $user_rol = $this->query_results['id_rol'];
+                        $user_rol = $this->query_results[0]['id_rol'];
                         if($user_rol == 1){
-                            $_SESSION['admin'] = true;
-                            $_SESSION['user_email'] = $this->query_results['email'];
-                            $_SESSION['user_name'] = $this->query_results['nombres'];
+                            $_SESSION['admin'] = 1;
+                            $_SESSION['user_email'] = $this->query_results[0]['email'];
+                            $_SESSION['user_name'] = $this->query_results[0]['nombres'];
 
                             header("location: ../admin/index.php");
                         }else{
@@ -105,6 +108,10 @@
             }else{
                 header("location: ../register.php?m=3"); 
             }
+        }
+
+        function logout(){
+            session_destroy();
         }
 
         function hashPassword($pswdText){
