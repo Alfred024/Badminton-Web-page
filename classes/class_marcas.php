@@ -14,12 +14,12 @@
                     if ( $action_case == 'formNew' ){
                         $button_label = 'Crear';
                         $method_name = 'create';
-                        $rol = '';
+                        $marca = '';
                     }else{
                         $button_label = 'Actualizar';
                         $method_name = 'update';
-                        $id = $_REQUEST['id_rol'];
-                        $rol = $_REQUEST['role'];
+                        $id = $_REQUEST['id_marca'];
+                        $marca = $_REQUEST['marca'];
                         // echo 'VOY A EDITAR';
                     }
 
@@ -28,14 +28,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <form method="POST" >
-                                '. (isset($id) ? "<input type='hidden' name='id_rol' value=".$id.">" : "") .'
+                                '. (isset($id) ? "<input type='hidden' name='id_marca' value=".$id.">" : "") .'
 
                                     <div class="form-group">
                                         
                                         <label for="role_name">
-                                            Rol: 
+                                            Marca: 
                                         </label>
-                                        <input id="role_name" name="rol" type="text" class="form-control" value="'.$rol.'"/>
+                                        <input id="role_name" name="marca" type="text" class="form-control" value="'.$marca.'"/>
                                     </div>
                                     <div class="d-flex justify-content-end mt-4">
                                         <button type="submit" class="btn bg-blue text-white">
@@ -70,25 +70,25 @@
 
         function create(){
             // echo ' VAMOS A HACER UN INSERT ';
-            $rol = $_POST['rol'];
+            $marca = $_POST['marca'];
             $insert_rol_query = '
-                INSERT INTO rol ( rol ) 
-                VALUES ( :rol );';
+                INSERT INTO marca ( marca ) 
+                VALUES ( :marca );';
             
-            $params = [':rol' => $rol,];
+            $params = [':marca' => $marca,];
             
             $this->do_query($insert_rol_query, $params);
             $this->read();
         }
 
         function update(){
-            $rol = $_POST['rol'];
-            $id_rol = $_POST['id_rol'];
+            $marca = $_POST['marca'];
+            $id_marca = $_POST['id_marca'];
             
             $update_rol_query = '
-                UPDATE rol SET rol = :rol 
-                WHERE id_rol = :id_rol;';
-            $params = [':rol' => $rol, ':id_rol' => $id_rol];
+                UPDATE marca SET marca = :marca 
+                WHERE id_marca = :id_marca;';
+            $params = [':marca' => $marca, ':id_marca' => $id_marca];
 
             $this->do_query($update_rol_query, $params);
             $this->read();
@@ -96,14 +96,14 @@
 
 
         function read(){
-            $get_user_query = 'SELECT * FROM rol';
+            $get_user_query = 'SELECT * FROM marca';
             $this->get_query($get_user_query);
 
             $result = '
             <div class="d-flex justify-content-end mb-3">
                 <form method="POST">
-                    <button class="btn btn-success btn-sm" title="Agregar nuevo rol">
-                        <i class="bi bi-plus-lg"></i> Agregar Rol
+                    <button class="btn btn-success btn-sm" title="Agregar nuevo marca">
+                        <i class="bi bi-plus-lg"></i> Agregar Marca
                     </button>
                     <input type="hidden" name="action" value="formNew">
                 </form>
@@ -114,7 +114,7 @@
                 <thead class="table-primary text-center">
                     <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Nombre</th>
+                        <th scope="col">Marca</th>
                         <th scope="col" style="width: 100px;">Acciones</th>
                     </tr>
                 </thead>
@@ -123,20 +123,20 @@
             foreach($this->query_results as $register){
                 $result .= "
                     <tr>
-                        <th class='text-center'> ".$register['id_rol']." </th>
-                        <td class='text-center'> ".$register['rol']." </td>
+                        <th class='text-center'> ".$register['id_marca']." </th>
+                        <td class='text-center'> ".$register['marca']." </td>
                         <td class='text-center'>
                             <div class='d-flex justify-content-center gap-2'>
                                 <form method='POST' class='btn btn-primary'>
                                     <input type='image' class='svg-white' style='width: 25px;' src='../assets/icons/edit-button.svg' alt='Edit icon' srcset=''>
                                     <input type='hidden' name='action' value='formEdit'>
-                                    <input type='hidden' name='role' value=".$register['rol'].">
-                                    <input type='hidden' name='id_rol' value=".$register['id_rol'].">
+                                    <input type='hidden' name='marca' value=".$register['marca'].">
+                                    <input type='hidden' name='id_marca' value=".$register['id_marca'].">
                                 </form>
                                 <form method='POST' class='btn btn-danger'>
                                     <input type='image' class='svg-white' style='width: 30px;' src='../assets/icons/delete.svg' alt='Delete icon' srcset=''>
                                     <input type='hidden' name='action' value='delete'>
-                                    <input type='hidden' name='id_rol' value=".$register['id_rol'].">
+                                    <input type='hidden' name='id_marca' value=".$register['id_marca'].">
                                 </form>
                             </div>
                         </td>
@@ -151,9 +151,9 @@
         }
 
         function delete(){
-            $id_rol = $_REQUEST['id_rol']; 
-            $delete_rol_query = 'DELETE FROM rol WHERE id_rol = :id_rol;';
-            $params = [':id_rol' => $id_rol,];
+            $id_marca = $_REQUEST['id_marca']; 
+            $delete_rol_query = 'DELETE FROM marca WHERE id_marca = :id_marca;';
+            $params = [':id_marca' => $id_marca,];
             $this->do_query($delete_rol_query, $params);
 
             $this->read();
