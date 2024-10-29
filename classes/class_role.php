@@ -27,7 +27,16 @@
         }
 
         function create(){
-           
+            $rol = $_POST['rol'];
+            $insert_rol_query = '
+                INSERT INTO rol ( rol ) 
+                VALUES ( :rol );';
+
+            $params = [':rol' => $rol,];
+
+            $this->do_query($insert_rol_query, $params);
+
+
         }
 
         function read(){
@@ -36,12 +45,12 @@
 
             $result = '
             <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
+            <table class="table table-striped table-hover shadow-sm">
+                <thead class="table-primary text-center">
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col"></th>
+                        <th scope="col" style="width: 100px;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -49,10 +58,10 @@
             foreach($this->query_results as $register){
                 $result .= "
                     <tr>
-                        <th> ".$register['id_rol']." </th>
-                        <td> ".$register['rol']." </td>
-                        <td>
-                            <div class='d-flex'>
+                        <th class='text-center'> ".$register['id_rol']." </th>
+                        <td class='text-center'> ".$register['rol']." </td>
+                        <td class='text-center'>
+                            <div class='d-flex justify-content-center gap-2'>
                                 <button class='btn btn-primary'><img class='svg-white' style='width: 25px;' src='../assets/icons/edit-button.svg' alt='Edit icon' srcset=''></button>
                                 <button class='btn btn-danger'><img class='svg-white' style='width: 30px;' src='../assets/icons/delete.svg' alt='Delete icon' srcset=''></button>
                             </div>

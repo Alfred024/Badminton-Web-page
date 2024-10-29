@@ -1,32 +1,35 @@
-<?php 
-    // if( !isset($_REQUEST['email']) && !isset($_REQUEST['pswd']) ){
-    //     // echo('Por favor llene todos los campos');
-    // }else{
+<?php
+  session_start();
+  session_unset();
 
-    //     include './classes/database.php';
-    //     $database = new Database();
+    function getCaptcha(&$res){
+        $operadores = array('+','-','x');
+        $operador1 = $operadores[rand(0,2)];
 
-    //     $email = $_REQUEST['email'];
-    //     $pswd = $_REQUEST['pswd'];
+        $num1 = rand(1,9);
+        $num2 = rand(1,9);
 
-    //     $get_user_query = 'SELECT * FROM usuario WHERE email = :email && clave = :pswd';
-    //     $params = [':email' => $email, ':pswd' => $pswd];
-    //     $database->do_query($get_user_query, $params);
+        $res = calculateOperation($num1, $num2, $operador1);
+        $captcha = $num1 . $operador1 . $num2;
+        return $captcha;
+    }
 
-    //     if( $database->query_results_num >= 1 ){
-    //         header('location: ./index.php');
-    //     }else{
-    //         header('location: ./login.php?m=400');
-    //     }
-    // }
+    function calculateOperation($numA, $numB, $operador){
+        if($operador == "+") return $numA + $numB;
+        if($operador == "-") return $numA - $numB;
+        return $numA * $numB;
+    }
+    $resLogin = 0;
 
+    $captchaLogin = getCaptcha($resLogin);
+    $_SESSION['captcha_login'] = $resLogin;
 ?>
 
 <?php include './views/header.php'  ?>
 
     <div class="container mt-5">
         <h1 class="text-center color-blue">Iniciar Sesión</h1>
-        <form method="post" class="w-50 mx-auto" action="./classes/user.php">
+        <form method="post" class="w-50 mx-auto" action="./classes/class_access.php">
             <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Ingresa tu correo">
@@ -37,7 +40,7 @@
             </div>
             <div class="mb-2">
                 <label for="captcha" class="form-label">Captcha</label>
-                <input name="captcha" type="captcha" class="form-control" placeholder="Ingresa el resultado lkd">
+                <input name="captcha" type="captcha" class="form-control" placeholder="Ingresa el resultado de la siguiente operación: <?php echo($captchaLogin) ?>">
             </div>
             <button type="submit" class="btn bg-blue text-white">Entrar</button>
             <input name="action" value="login" type="hidden">
