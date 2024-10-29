@@ -8,11 +8,11 @@
     include './views/header-admin.php';
 ?>
     
-    <h1 class="text-center mb-4 color-dark-blue">Pestaña de Formas de Pago</h1>
+    <h1 class="text-center mb-4 color-dark-blue">Pestaña de Tipo renta</h1>
 
     <div class="container mt-4">
         <?php 
-            include '../classes/class_formas_pago.php';
+            include '../classes/class_role.php';
         ?>
 
     </div>
