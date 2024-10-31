@@ -16,6 +16,7 @@
             Badminton para todos
         </a>
         <ul class="nav">
+            <li class="nav-item"><a class="nav-link" href="./usuarios.php">Usuarios</a></li>
             <li class="nav-item"><a class="nav-link" href="./roles.php">Roles</a></li>
             <li class="nav-item"><a class="nav-link" href="./marcas.php">Marcas</a></li>
             <li class="nav-item"><a class="nav-link" href="./formas_pago.php">Formas pago</a></li>
