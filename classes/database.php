@@ -66,6 +66,28 @@
                 echo $e->getMessage();
             }
         }
+
+        function select_field($new_field, $table_name, $table_pk, $display_field){
+            $get_user_query = 'SELECT * FROM '.$table_name.' order by '.$table_pk.';';
+            $this->get_query($get_user_query);
+
+            $res = " 
+            <div class='form-group'>
+                <label for='role_name'> ".$table_name.": </label>
+                <select class='form-control' name='".$new_field."'>";
+
+            foreach ( $this->query_results as $register ) { 
+                $res .= "
+                    <option value='".$register[$table_pk]."'> ".$register[$display_field]." </option>
+                ";
+            }
+
+            $res .= "
+                </select>
+            </div>
+            ";
+            return $res;
+        }
     }
 
 ?>

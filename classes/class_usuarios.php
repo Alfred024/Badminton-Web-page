@@ -18,6 +18,8 @@
                         $apellidos = '';
                         $clave = '';
                         $email = '';
+                        $gender = '';
+                        $id_rol = '';
                     }else{
                         $button_label = 'Actualizar';
                         $method_name = 'update';
@@ -26,6 +28,8 @@
                         $apellidos = $_REQUEST['apellidos'];
                         $clave = $_REQUEST['clave'];
                         $email = $_REQUEST['email'];
+                        $gender = $_REQUEST['gender'];
+                        $id_rol = $_REQUEST['id_rol'];
                     }
 
                     $form = '
@@ -74,9 +78,17 @@
                                             <input id='role_name' name='clave2' type='text' class='form-control' value='".$clave."'/>
                                         </div>
                                         " : "" ) .'
-                                  
 
-                                    <div class="d-flex justify-content-end mt-4">
+                                    <label> Género </label>
+                                    <select name="gender" class="form-select mt-1" aria-label="Default select example">
+                                        <option value="h">Hombre</option>
+                                        <option value="m">Mujer</option>
+                                        <option value="o">Otro</option>
+                                    </select>
+
+                                    '. $this->select_field('id_rol', 'rol', 'id_rol', 'rol') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+
+                                    <div class="d-flex justify-content-end mt-3">
                                         <button type="submit" class="btn bg-blue text-white">
                                             '.$button_label.'
                                         </button>
@@ -108,8 +120,7 @@
         }
 
         function create(){
-            // echo ' VAMOS A HACER UN INSERT ';
-            
+            $id_rol = $_POST['id_rol'];
             $nombres = $_POST['nombres'];
             $apellidos = $_POST['apellidos'];
             $email = $_POST['email'];
@@ -118,10 +129,10 @@
             $clave2 = $_POST['clave2'];
 
             $insert_rol_query = '
-                INSERT INTO usuario ( nombres, apellidos, email, clave ) 
-                VALUES ( :nombres, :apellidos, :email, :clave);';
+                INSERT INTO usuario ( id_rol, nombres, apellidos, email, clave ) 
+                VALUES ( :id_rol, :nombres, :apellidos, :email, :clave);';
             
-            $params = [':nombres' => $nombres, ':apellidos' => $apellidos, ':email' => $email, ':clave' => $clave];
+            $params = [ ':id_rol' => $id_rol ,':nombres' => $nombres, ':apellidos' => $apellidos, ':email' => $email, ':clave' => $clave];
             
             $this->do_query($insert_rol_query, $params);
             $this->read();

@@ -21,6 +21,9 @@
             <li class="nav-item"><a class="nav-link" href="./marcas.php">Marcas</a></li>
             <li class="nav-item"><a class="nav-link" href="./formas_pago.php">Formas pago</a></li>
             <li class="nav-item"><a class="nav-link" href="./estado_renta.php">Estado renta</a></li>
-            <li class="nav-item"><a class="nav-link" href="../index.php">Cerrar sesión</a></li>
+            <li class="nav-item d-flex align-items-center">
+                <img style="width: 20px; height: 20px;" src="../assets/icons/logout.png" alt="Logout icon" srcset="">
+                <a class="nav-link" href="../index.php">Cerrar sesión</a>
+            </li>
         </ul>
     </nav>
