@@ -33,7 +33,7 @@
                     }
 
                     $form = '
-                    <div class="container">
+                    <div class="container mb-5">
                         <div class="row">
                             <div class="col-md-12">
                                 <form method="POST" >
@@ -79,12 +79,8 @@
                                         </div>
                                         " : "" ) .'
 
-                                    <label> Género </label>
-                                    <select name="gender" class="form-select mt-1" aria-label="Default select example">
-                                        <option value="h">Hombre</option>
-                                        <option value="m">Mujer</option>
-                                        <option value="o">Otro</option>
-                                    </select>
+                                    
+                                    '. $this->select_field('id_genero', 'genero', 'id_genero', 'genero') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
 
                                     '. $this->select_field('id_rol', 'rol', 'id_rol', 'rol') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
 

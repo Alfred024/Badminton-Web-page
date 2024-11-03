@@ -19,6 +19,7 @@
             <li class="nav-item"><a class="nav-link" href="./usuarios.php">Usuarios</a></li>
             <li class="nav-item"><a class="nav-link" href="./roles.php">Roles</a></li>
             <li class="nav-item"><a class="nav-link" href="./marcas.php">Marcas</a></li>
+            <li class="nav-item"><a class="nav-link" href="./equipo.php">Equipo</a></li>
             <li class="nav-item"><a class="nav-link" href="./formas_pago.php">Formas pago</a></li>
             <li class="nav-item"><a class="nav-link" href="./estado_renta.php">Estado renta</a></li>
             <li class="nav-item d-flex align-items-center">
