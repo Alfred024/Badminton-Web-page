@@ -32,7 +32,12 @@
                                 <form method="POST" >
                                 '. (isset($id) ? "<input type='hidden' name='id_equipo' value=".$id.">" : "") .'
 
-                                    '. $this->select_field('id_marca', 'marca', 'id_marca', 'marca') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+                                    <div class="form-group">
+                                        <label for="role_name">
+                                            Marca:
+                                        </label> 
+                                        '. $this->select_field('id_marca', 'marca', 'id_marca', 'marca') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="role_name">
@@ -92,7 +97,6 @@
             
             $this->do_query($insert_equipo_query, $params);
             $this->read();
-            echo $insert_equipo_query;
         }
 
         function update(){
@@ -128,7 +132,7 @@
                 <thead class="table-primary text-center">
                     <tr>
                         <th scope="col">Id Equipo</th>
-                        <th scope="col">Id Marca</th>
+                        <th scope="col">Marca</th>
                         <th scope="col">No. de serie</th>
                         <th scope="col">Descripción</th>
                         <th scope="col" style="width: 100px;">Acciones</th>
@@ -140,9 +144,11 @@
                 $result .= "
                     <tr>
                         <th class='text-center'> ".$register['id_equipo']." </th>
-                        <td class='text-center'> ".$register['id_marca']." </td>
-                        <th class='text-center'> ".$register['no_serie']." </th>
-                        <th class='text-center'> ".$register['descripcion']." </th>
+                        
+                        ". ( $this->td_field('marca', 'id_marca', 'marca', $register['id_marca'] ) ) ."
+
+                        <td class='text-center'> ".$register['no_serie']." </td>
+                        <td class='text-center'> ".$register['descripcion']." </td>
                         <td class='text-center'>
                             <div class='d-flex justify-content-center gap-2'>
                                 <form method='POST' class='btn btn-primary'>
@@ -151,7 +157,7 @@
                                     <input type='hidden' name='id_equipo' value=".$register['id_equipo'].">
                                     <input type='hidden' name='id_marca' value=".$register['id_marca'].">
                                     <input type='hidden' name='no_serie' value=".$register['no_serie'].">
-                                    <input type='hidden' name='descripcion' value=".$register['descripcion'].">
+                                    <input type='hidden' name='descripcion' value=\"".$register['descripcion']."\">
                                 </form>
                                 <form method='POST' class='btn btn-danger'>
                                     <input type='image' class='svg-white' style='width: 30px;' src='../assets/icons/delete.svg' alt='Delete icon' srcset=''>

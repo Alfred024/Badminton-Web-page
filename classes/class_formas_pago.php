@@ -33,7 +33,7 @@
                                     <div class="form-group">
                                         
                                         <label for="role_name">
-                                            Rol: 
+                                            Formas de pago: 
                                         </label>
                                         <input id="role_name" name="forma_pago" type="text" class="form-control" value="'.$forma_pago.'"/>
                                     </div>

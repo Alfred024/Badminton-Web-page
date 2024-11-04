@@ -79,10 +79,15 @@
                                         </div>
                                         " : "" ) .'
 
-                                    
-                                    '. $this->select_field('id_genero', 'genero', 'id_genero', 'genero') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+                                    <div class="form-group">
+                                        <label for=""> Genero: </label>
+                                        '. $this->select_field('id_genero', 'genero', 'id_genero', 'genero') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+                                    </div>
 
-                                    '. $this->select_field('id_rol', 'rol', 'id_rol', 'rol') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+                                    <div class="form-group">
+                                        <label for=""> Rol: </label>
+                                        '. $this->select_field('id_rol', 'rol', 'id_rol', 'rol') .' <!-- El primer parámetro es le valor de la variable cuando se hace un POST -->
+                                    </div>
 
                                     <div class="d-flex justify-content-end mt-3">
                                         <button type="submit" class="btn bg-blue text-white">

@@ -72,8 +72,6 @@
             $this->get_query($get_user_query);
 
             $res = " 
-            <div class='form-group'>
-                <label for='role_name'> ".$table_name.": </label>
                 <select class='form-control' name='".$new_field."'>";
 
             foreach ( $this->query_results as $register ) { 
@@ -82,10 +80,22 @@
                 ";
             }
 
-            $res .= "
-                </select>
-            </div>
-            ";
+            $res .= "</select>";
+            return $res;
+        }
+
+        function td_field( $table_name, $table_pk, $display_field, $id_value){
+            $get_user_query = 'SELECT '.$display_field.' FROM '.$table_name.' where '.$table_pk.' = '.$id_value.';';
+            $this->get_query($get_user_query);
+
+            $res = " 
+            <td class='text-center'>";
+
+            foreach ( $this->query_results as $register ) { 
+                $res .= $register[$display_field];
+            }
+
+            $res .= "</td>";
             return $res;
         }
     }
