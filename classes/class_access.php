@@ -27,35 +27,41 @@
         function login(){
             $email = $_REQUEST['email'];
             $pswd = $_REQUEST['pswd'];
-            $captcha = 5;
+            $captcha = $_REQUEST['captcha'];
 
             if ( $email != null && $pswd != null && $captcha != null ) {
-                $get_user_query = 'SELECT * FROM usuario WHERE email = :email';
-                $get_params = [':email' => $email];
-                
-                $this->do_query($get_user_query, $get_params);
-                if( $this->query_results_num == 0 ){
-                    header("location: ../login.php?m=2"); 
+
+                if( $this->validateCaptcha($captcha, 'login') != 1 ){
+                    header("location: ../login.php?m=5"); 
                 }else{
-
-                    $get_user_query = 'SELECT * FROM usuario WHERE email = :email and clave = :pswd';
-                    $get_params = [':email' => $email, ':pswd' => $pswd];
-                    $this->get_query($get_user_query, $get_params);
-                    if( $this->query_results_num == 1 ){
-                        $user_rol = $this->query_results[0]['id_rol'];
-                        if($user_rol == 1){
-                            $_SESSION['admin'] = 1;
-                            $_SESSION['user_email'] = $this->query_results[0]['email'];
-                            $_SESSION['user_name'] = $this->query_results[0]['nombres'];
-
-                            header("location: ../admin/index.php");
-                        }else{
-                            header("location: ../user/index.php"); 
-                        }
+                    $get_user_query = 'SELECT * FROM usuario WHERE email = :email';
+                    $get_params = [':email' => $email];
+                    
+                    $this->do_query($get_user_query, $get_params);
+                    if( $this->query_results_num == 0 ){
+                        header("location: ../login.php?m=2"); 
                     }else{
-                        header("location: ../login.php?m=4");
+    
+                        $get_user_query = 'SELECT * FROM usuario WHERE email = :email and clave = :pswd';
+                        $get_params = [':email' => $email, ':pswd' => $pswd];
+                        $this->get_query($get_user_query, $get_params);
+                        if( $this->query_results_num == 1 ){
+                            $user_rol = $this->query_results[0]['id_rol'];
+                            if($user_rol == 1){
+                                $_SESSION['admin'] = 1;
+                                $_SESSION['user_email'] = $this->query_results[0]['email'];
+                                $_SESSION['user_name'] = $this->query_results[0]['nombres'];
+    
+                                header("location: ../admin/index.php");
+                            }else{
+                                header("location: ../user/index.php"); 
+                            }
+                        }else{
+                            header("location: ../login.php?m=4");
+                        }
                     }
                 }
+
             }else{
                 header("location: ../login.php?m=3"); 
             }
@@ -67,41 +73,43 @@
             $gender = $_REQUEST['gender'];
             $pswd = $_REQUEST['pswd'];
             $email = $_REQUEST['email'];
-            $captcha = 5;
+            $captcha = $_REQUEST['captcha'];
 
             if ( $email != null && $pswd != null && $name != null && $last_name != null && $captcha != null && $gender != null ) {
-                // TODO: Validar que el captcha esté correcto m=1
-
-                $get_user_query = 'SELECT * FROM usuario WHERE email = :email';
-                $get_params = [':email' => $email];
-                
-                $this->do_query($get_user_query, $get_params);
-                if( $this->query_results_num == 1 ){
-                    header("location: ../register.php?m=2"); 
+                if( $this->validateCaptcha($captcha, 'register') != 1 ){
+                    header("location: ../register.php?m=5"); 
                 }else{
-                    // FIXME: Aquí generaríamos la contraseña, pero como no funciona el email, no hay forma de saber cuál sería 
-                    // FIXME: Mandar el email, si el resultado es True, hace el registro en la base de datos
-    
-                    switch ($gender) {
-                        case 'm':
-                            $gender = 2;
-                            break;
-                        case 'h':
-                            $gender = 1;
-                            break;
-                        case 'o':
-                            $gender = 3;
-                            break;
-                    }
-                    $insert_user_query = '
-                        INSERT INTO usuario ( id_rol, id_genero, nombres, apellidos, clave, email ) 
-                        VALUES ( 2, 3, :name, :last_name, :pswd, :email );';
-    
-                    $params = [':name' => $name, ':last_name' => $last_name,':pswd' => $pswd, ':email' => $email,];
-                    $this->do_query($insert_user_query, $params);
-    
-                    if($this->query_results_num == 1){
-                        header("location: ../register.php?m=4");    
+                    $get_user_query = 'SELECT * FROM usuario WHERE email = :email';
+                    $get_params = [':email' => $email];
+                    
+                    $this->do_query($get_user_query, $get_params);
+                    if( $this->query_results_num == 1 ){
+                        header("location: ../register.php?m=2"); 
+                    }else{
+                        // FIXME: Aquí generaríamos la contraseña, pero como no funciona el email, no hay forma de saber cuál sería 
+                        // FIXME: Mandar el email, si el resultado es True, hace el registro en la base de datos
+        
+                        switch ($gender) {
+                            case 'm':
+                                $gender = 2;
+                                break;
+                            case 'h':
+                                $gender = 1;
+                                break;
+                            case 'o':
+                                $gender = 3;
+                                break;
+                        }
+                        $insert_user_query = '
+                            INSERT INTO usuario ( id_rol, id_genero, nombres, apellidos, clave, email ) 
+                            VALUES ( 2, 3, :name, :last_name, :pswd, :email );';
+        
+                        $params = [':name' => $name, ':last_name' => $last_name,':pswd' => $pswd, ':email' => $email,];
+                        $this->do_query($insert_user_query, $params);
+        
+                        if($this->query_results_num == 1){
+                            header("location: ../register.php?m=4");    
+                        }
                     }
                 }
                 
@@ -145,6 +153,20 @@
             $mailer->AddAddress($email);
 
             return $mailer->Send();
+        }
+
+        function validateCaptcha($user_captcha, $action) : Bool{
+            if($action == 'login'){
+                $captcha_var_name = 'captcha_login';
+            } else {
+                $captcha_var_name = 'captcha_register';
+            }
+
+            if($user_captcha != $_SESSION[$captcha_var_name]){
+                return False;
+            }
+
+            return True;
         }
     }
 

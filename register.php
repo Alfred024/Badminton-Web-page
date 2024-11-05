@@ -64,9 +64,6 @@
                     $message = $_REQUEST['m'];
                     
                     switch ($message) {
-                        case '1':  
-                            echo ('<p class="text-end color-blue"><b>Captcha incorrecto, favor de validar.</b></p>');
-                            break;
                         case '2': 
                             echo ('<p class="text-end color-blue"><b>El email ya está registrado.</b></p>');
                             break;
@@ -75,6 +72,9 @@
                             break;
                         case '4':  
                             echo ('<p class="text-end color-blue"><b>Usuario registrado exitosamente!!.</b></p>');
+                            break;
+                        case '5':  
+                            echo ('<p class="text-end color-blue"><b>Captcha incorrecto.</b></p>');
                             break;
                     }
                 }

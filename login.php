@@ -63,6 +63,9 @@
                         case '4':  
                             echo ('<p class="text-end color-blue"><b>Credenciales inválidas.</b></p>');
                             break;
+                        case '5':  
+                            echo ('<p class="text-end color-blue"><b>Captcha incorrecto.</b></p>');
+                            break;
                     }
                 }
             ?>
