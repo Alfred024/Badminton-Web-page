@@ -47,13 +47,16 @@
                         $this->get_query($get_user_query, $get_params);
                         if( $this->query_results_num == 1 ){
                             $user_rol = $this->query_results[0]['id_rol'];
+                            $_SESSION['user_id'] = $this->query_results[0]['id_usuario'];
+                            $_SESSION['user_email'] = $this->query_results[0]['email'];
+                            $_SESSION['user_name'] = $this->query_results[0]['nombres'];
+                            $_SESSION['photo'] = $this->query_results[0]['foto'];
+
                             if($user_rol == 1){
                                 $_SESSION['admin'] = 1;
-                                $_SESSION['user_email'] = $this->query_results[0]['email'];
-                                $_SESSION['user_name'] = $this->query_results[0]['nombres'];
-    
                                 header("location: ../admin/index.php");
                             }else{
+                                $_SESSION['admin'] = 0;
                                 header("location: ../user/index.php"); 
                             }
                         }else{

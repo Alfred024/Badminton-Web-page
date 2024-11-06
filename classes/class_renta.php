@@ -46,14 +46,14 @@
                                         <label for="role_name">
                                             Empleado: 
                                         </label>
-                                        '. $this->select_field('id_usuario', 'usuario', 'id_usuario', 'nombres') .'
+                                        '. $this->select_field('id_usuario_empleado', 'usuario', 'id_usuario', 'nombres') .'
                                     </div>
 
                                     <div class="form-group">
                                         <label for="role_name">
                                             Cliente: 
                                         </label>
-                                       '. $this->select_field('id_usuario', 'usuario', 'id_usuario', 'nombres') .'
+                                       '. $this->select_field('id_usuario_cliente', 'usuario', 'id_usuario', 'nombres') .'
                                     </div>
 
                                     <div class="form-group">
@@ -76,33 +76,32 @@
                                         </label>
                                         '. $this->select_field('id_estado_renta', 'estado_renta', 'id_estado_renta', 'estado_renta') .'
                                     </div>
-                                    
                                     <div class="form-group">
                                         <label for="role_name">
                                             Fecha: 
                                         </label>
-                                        <input id="role_name" name="no_serie" type="time" class="form-control" value="'.$fecha.'"/>
+                                        <input id="role_name" name="fecha" type="date" class="form-control" value="'.$fecha.'"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="role_name">
                                             Hora: 
                                         </label>
-                                        <input id="role_name" name="no_serie" type="hour" class="form-control" value="'.$hora.'"/>
+                                        <input id="role_name" name="hora" type="time" class="form-control" value="'.$hora.'"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="role_name">
                                             Duración: 
                                         </label>
-                                        <input id="role_name" name="no_serie" type="number" class="form-control" value="'.$duracion.'"/>
+                                        <input id="role_name" name="duracion" type="text" class="form-control" value="'.$duracion.'"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="role_name">
                                             Costo: 
                                         </label>
-                                        <input id="role_name" name="no_serie" type="number" class="form-control" value="'.$costo.'"/>
+                                        <input id="role_name" name="costo" type="text" class="form-control" value="'.$costo.'"/>
                                     </div>
 
                                     <div class="d-flex justify-content-end mt-3">
@@ -137,22 +136,29 @@
         }
 
         function create(){
-            $id_marca = $_POST['id_marca'];
+            $id_empleado = $_POST['id_usuario_empleado'];
+            $id_cliente = $_POST['id_usuario_cliente'];
             $no_serie = $_POST['no_serie'];
-            $descripcion = $_POST['descripcion'];
+            $id_forma_pago = $_POST['id_forma_pago'];
+            $id_estado_renta = $_POST['id_estado_renta'];
+            $fecha = $_POST['fecha'];
+            $hora = $_POST['hora'];
+            $duracion = $_POST['duracion'];
+            $costo = $_POST['costo'];
 
             $insert_equipo_query = '
-                INSERT INTO equipo (  id_marca, no_serie, descripcion ) 
-                VALUES ( :id_marca, :no_serie, :descripcion );';
+                INSERT INTO renta (  id_empleado, id_cliente, id_forma_pago, no_serie, id_estado_renta, fecha, hora, duracion, costo) 
+                VALUES ( :id_empleado, :id_cliente, :id_forma_pago, :no_serie, :id_estado_renta, :fecha, :hora, :duracion, :costo );';
             
-            $params = [ ':id_marca' => $id_marca, ':no_serie' => $no_serie, ':descripcion' => $descripcion ];
+            $params = [  ];
             
             $this->do_query($insert_equipo_query, $params);
             $this->read();
-            echo $insert_equipo_query;
         }
 
         function update(){
+            $cliente = $_POST[''];
+            $empleado = $_POST[''];
             $id_marca = $_POST['id_marca'];
             $no_serie = $_POST['no_serie'];
             $descripcion = $_POST['descripcion'];
@@ -215,7 +221,7 @@
                         <td class='text-center'>
                             <div class='d-flex justify-content-center gap-2'>
                                 <form method='POST' class='btn btn-primary'>
-                                    <input type='image' class='svg-white' style='width: 25px;' src='../assets/icons/edit-button.svg' alt='Edit icon' srcset=''>
+                                    <input type='image' class='svg-white' style='width: 25px;' src='../images/icons/edit-button.svg' alt='Edit icon' srcset=''>
                                     <input type='hidden' name='action' value='formEdit'>
                                     <input type='hidden' name='id_renta' value=".$register['id_renta'].">
                                     <input type='hidden' name='id_usuario_empleado' value=".$register['id_usuario_empleado'].">
@@ -229,7 +235,7 @@
                                     <input type='hidden' name='costo' value=".$register['costo'].">
                                 </form>
                                 <form method='POST' class='btn btn-danger'>
-                                    <input type='image' class='svg-white' style='width: 30px;' src='../assets/icons/delete.svg' alt='Delete icon' srcset=''>
+                                    <input type='image' class='svg-white' style='width: 30px;' src='../images/icons/delete.svg' alt='Delete icon' srcset=''>
                                     <input type='hidden' name='action' value='delete'>
                                     <input type='hidden' name='id_renta' value=".$register['id_renta'].">
                                 </form>

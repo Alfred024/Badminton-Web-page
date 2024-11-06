@@ -128,13 +128,13 @@
                         <td class='text-center'>
                             <div class='d-flex justify-content-center gap-2'>
                                 <form method='POST' class='btn btn-primary'>
-                                    <input type='image' class='svg-white' style='width: 25px;' src='../assets/icons/edit-button.svg' alt='Edit icon' srcset=''>
+                                    <input type='image' class='svg-white' style='width: 25px;' src='../images/icons/edit-button.svg' alt='Edit icon' srcset=''>
                                     <input type='hidden' name='action' value='formEdit'>
                                     <input type='hidden' name='estado_renta' value=".$register['estado_renta'].">
                                     <input type='hidden' name='id_estado_renta' value=".$register['id_estado_renta'].">
                                 </form>
                                 <form method='POST' class='btn btn-danger'>
-                                    <input type='image' class='svg-white' style='width: 30px;' src='../assets/icons/delete.svg' alt='Delete icon' srcset=''>
+                                    <input type='image' class='svg-white' style='width: 30px;' src='../images/icons/delete.svg' alt='Delete icon' srcset=''>
                                     <input type='hidden' name='action' value='delete'>
                                     <input type='hidden' name='id_estado_renta' value=".$register['id_estado_renta'].">
                                 </form>

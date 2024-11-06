@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-light bg-light-blue">
         <a class="navbar-brand" href="./">
-            <img style="width: 60px;" src="./assets/badminton-icon.png" alt="Logo Badminton" srcset="">
+            <img style="width: 60px;" src="./images/badminton-icon.png" alt="Logo Badminton" srcset="">
             Badminton para todos
         </a>
         <ul class="nav">

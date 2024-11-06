@@ -1,0 +1,38 @@
+;
+; DataItemDefEqu.asm
+;
+; Created: 03/10/2024 12:13:29 p. m.
+; Author : Carlos Euresty
+;
+
+; This program converts the string “hello” stored in the program memory
+; into the string “HELLO” stored in the data memory
+;.include "m64def.inc"
+
+.equ size =5
+
+.def counter=r17
+
+.dseg ; Data segment
+.org 0x00 ;Set the starting address of data segment to 0x100
+Cap_string: .byte 5 ; Allocate 5 bytes of data memory to store “HELLO”
+.cseg  ;Code segment
+Low_string: .db "hello" ; “hello” is stored in the program memory
+ldi zl, low(Low_string<<1) ; load the low byte of
+                           ; the address of "h“ into zl
+ldi zh, high(Low_string<<1) ; load the high byte of
+                            ; the address of "h“ into zh
+ldi yh, high(Cap_string) ; load the high byte of the starting address of
+                         ; the capital string “HELLO”
+ldi yl, low(Cap_string)  ; load the low byte of the starting address of “HELLO”
+clr counter              ; counter=0
+main:
+lpm r20, z+ ; load a letter from the program (flash) memory
+subi r20, 32 ; convert it to the capital letter
+st y+,r20 ; store the capital letter in SRAM (data memory)
+inc counter ; increment counter
+cpi counter, size ; check the exit condition of the loop
+brlt main
+loop: rjmp loop ; there must be an infinite loop at the end of each
+                ; program. Otherwise, the program will go wild (PC will
+                ; point to an invalid instruction)
