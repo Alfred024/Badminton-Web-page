@@ -101,12 +101,15 @@
 
         function update(){
             $id_marca = $_POST['id_marca'];
-            $no_serie = $_POST['no_serie'];
+            // $no_serie = $_POST['no_serie'];
             $descripcion = $_POST['descripcion'];
             
+            // $update_equipo_query = '
+            //     UPDATE equipo SET id_marca = :id_marca, no_serie = :no_serie, descripcion = :descripcion;';
+            // $params = [ ':id_marca' => $id_marca, ':no_serie' => $no_serie, ':descripcion' => $descripcion ];
             $update_equipo_query = '
-                UPDATE equipo SET id_marca = :id_marca, no_serie = :no_serie, descripcion = :descripcion;';
-            $params = [ ':id_marca' => $id_marca, ':no_serie' => $no_serie, ':descripcion' => $descripcion ];
+                UPDATE equipo SET id_marca = :id_marca, descripcion = :descripcion;';
+            $params = [ ':id_marca' => $id_marca, ':descripcion' => $descripcion ];
 
             $this->do_query($update_equipo_query, $params);
             $this->read();
@@ -114,7 +117,7 @@
 
 
         function read(){
-            $get_user_query = 'SELECT * FROM equipo';
+            $get_user_query = 'SELECT * FROM equipo;';
             $this->get_query($get_user_query);
 
             $result = '

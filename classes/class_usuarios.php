@@ -28,8 +28,6 @@
                         $apellidos = $_REQUEST['apellidos'];
                         $clave = $_REQUEST['clave'];
                         $email = $_REQUEST['email'];
-                        $gender = $_REQUEST['gender'];
-                        $id_rol = $_REQUEST['id_rol'];
                     }
 
                     $form = '

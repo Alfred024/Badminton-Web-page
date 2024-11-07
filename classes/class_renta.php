@@ -87,7 +87,7 @@
                                         <label for="role_name">
                                             Hora: 
                                         </label>
-                                        <input id="role_name" name="hora" type="time" class="form-control" value="'.$hora.'"/>
+                                        <input id="role_name" name="hora" type="text" class="form-control" value="'.$hora.'"/>
                                     </div>
 
                                     <div class="form-group">
@@ -136,9 +136,9 @@
         }
 
         function create(){
-            $id_empleado = $_POST['id_usuario_empleado'];
-            $id_cliente = $_POST['id_usuario_cliente'];
-            $no_serie = $_POST['no_serie'];
+            $id_usuario_empleado = $_POST['id_usuario_empleado'];
+            $id_usuario_cliente = $_POST['id_usuario_cliente'];
+            $id_equipo = $_POST['id_equipo'];
             $id_forma_pago = $_POST['id_forma_pago'];
             $id_estado_renta = $_POST['id_estado_renta'];
             $fecha = $_POST['fecha'];
@@ -147,25 +147,74 @@
             $costo = $_POST['costo'];
 
             $insert_equipo_query = '
-                INSERT INTO renta (  id_empleado, id_cliente, id_forma_pago, no_serie, id_estado_renta, fecha, hora, duracion, costo) 
-                VALUES ( :id_empleado, :id_cliente, :id_forma_pago, :no_serie, :id_estado_renta, :fecha, :hora, :duracion, :costo );';
+                INSERT INTO renta (  id_usuario_empleado, id_usuario_cliente, id_forma_pago, id_equipo, id_estado_renta, fecha, hora, duracion, costo ) 
+                VALUES ( :id_usuario_empleado, :id_usuario_cliente, :id_forma_pago, :id_equipo, :id_estado_renta, :fecha, :hora, :duracion, :costo );';
             
-            $params = [  ];
+            $params = [ 
+                ':id_usuario_empleado' => $id_usuario_empleado,
+                ':id_usuario_cliente' => $id_usuario_cliente,
+                ':id_equipo' => $id_equipo,
+                ':id_forma_pago' => $id_forma_pago,
+                ':id_estado_renta' => $id_estado_renta,
+                ':fecha' => $fecha,
+                ':hora' => $hora,
+                ':duracion' => $duracion,
+                ':costo' => $costo,
+             ];
             
             $this->do_query($insert_equipo_query, $params);
             $this->read();
         }
 
         function update(){
-            $cliente = $_POST[''];
-            $empleado = $_POST[''];
-            $id_marca = $_POST['id_marca'];
-            $no_serie = $_POST['no_serie'];
-            $descripcion = $_POST['descripcion'];
+            $id_usuario_empleado = $_POST['id_usuario_empleado'];
+            $id_usuario_cliente = $_POST['id_usuario_cliente'];
+            $id_equipo = $_POST['id_equipo'];
+            $id_forma_pago = $_POST['id_forma_pago'];
+            $id_estado_renta = $_POST['id_estado_renta'];
+            // $fecha = $_POST['fecha'];
+            // $hora = $_POST['hora'];
+            // $duracion = $_POST['duracion'];
+            // $costo = $_POST['costo'];
+
+            // $update_equipo_query = '
+            //     UPDATE renta SET 
+            //         id_equipo = :id_equipo, 
+            //         id_forma_pago = :id_forma_pago,
+            //         id_estado_renta = :id_estado_renta,
+            //         fecha = :fecha,     
+            //         hora = :hora,
+            //         duracion = :duracion,
+            //         costo = :costo
+            //     ;';
             
+            // $params = [ 
+            //     // ':id_usuario_empleado' => $id_usuario_empleado,
+            //     // ':id_usuario_cliente' => $id_usuario_cliente,
+            //     ' :id_equipo' => $id_equipo,
+            //     ':id_forma_pago' => $id_forma_pago,
+            //     ':id_estado_renta' => $id_estado_renta,
+            //     ':fecha' => $fecha,
+            //     ':hora' => $hora,
+            //     ':duracion' => $duracion,
+            //     ':costo' => $costo,
+            //  ];
+
             $update_equipo_query = '
-                UPDATE equipo SET id_marca = :id_marca, no_serie = :no_serie, descripcion = :descripcion;';
-            $params = [ ':id_marca' => $id_marca, ':no_serie' => $no_serie, ':descripcion' => $descripcion ];
+                UPDATE renta SET 
+                    id_equipo = :id_equipo, 
+                    id_forma_pago = :id_forma_pago,
+                    id_estado_renta = :id_estado_renta
+                ;';
+            
+            $params = [ 
+                // ':id_usuario_empleado' => $id_usuario_empleado,
+                // ':id_usuario_cliente' => $id_usuario_cliente,
+                ' :id_equipo' => $id_equipo,
+                ':id_forma_pago' => $id_forma_pago,
+                ':id_estado_renta' => $id_estado_renta
+             ];
+
 
             $this->do_query($update_equipo_query, $params);
             $this->read();
@@ -173,9 +222,25 @@
 
 
         function read(){
-            $get_user_query = 'SELECT * FROM renta';
-            $this->get_query($get_user_query);
+            $get_user_query = 
+            'SELECT 
+                *,
+                cli.nombres as cliente,
+                emp.nombres as empleado,
+                pago.forma_pago as forma_pago,
+                renta.estado_renta as estado_renta
+            FROM renta re
+            left JOIN usuario cli
+            on re.id_usuario_cliente = cli.id_usuario
+            LEFT join usuario emp
+            on re.id_usuario_empleado = emp.id_usuario
+            LEFT join estado_renta renta
+            on re.id_estado_renta = renta.id_estado_renta
+            LEFT join forma_pago pago
+            on re.id_forma_pago = pago.id_forma_pago;';
+            
 
+            $this->get_query($get_user_query);
             $result = '
             <div class="d-flex justify-content-end mb-3">
                 <form method="POST">
@@ -209,11 +274,11 @@
                 $result .= "
                     <tr>
                         <th class='text-center'> ".$register['id_renta']." </th>
-                        <td class='text-center'> ".$register['id_usuario_empleado']." </td>
-                        <th class='text-center'> ".$register['id_usuario_cliente']." </th>
+                        <td class='text-center'> ".$register['empleado']." </td>
+                        <th class='text-center'> ".$register['cliente']." </th>
                         <th class='text-center'> ".$register['id_equipo']." </th>
-                        <th class='text-center'> ".$register['id_forma_pago']." </th>
-                        <td class='text-center'> ".$register['id_estado_renta']." </td>
+                        <th class='text-center'> ".$register['forma_pago']." </th>
+                        <td class='text-center'> ".$register['estado_renta']." </td>
                         <th class='text-center'> ".$register['fecha']." </th>
                         <th class='text-center'> ".$register['hora']." </th>
                         <th class='text-center'> ".$register['duracion']." </th>
