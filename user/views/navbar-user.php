@@ -24,6 +24,15 @@
                 </a>
             </li>
             <li class="nav-item">
+                <form method="post" action="./profile.php" class="w-50 mx-auto">
+                    <button type="submit" class="nav-link active">Perfil</button>
+                    <!-- <a class="nav-link active" aria-current="page">
+                        <i class="bi bi-house-door-fill me-2"></i>Perfil
+                    </a> -->
+                    <input type="hidden" name="action" value="get_user">
+                </form>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="bi bi-clipboard-data-fill me-2"></i>Equipos
                 </a>
