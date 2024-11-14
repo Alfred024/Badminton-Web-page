@@ -6,7 +6,7 @@
                     if ( $_SESSION['photo'] > "" ){
                         echo '../images/users/'.$_SESSION['user_id'].'.'.$_SESSION['photo'].'';
                     } else{
-                        echo '../images/users/user.webp';
+                        echo '../images/users/user.jpg';
                     }
                 ?>
             " alt="Foto de perfil" class="rounded-circle mb-2" width="80" height="80">

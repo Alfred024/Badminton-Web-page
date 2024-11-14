@@ -1,6 +1,8 @@
 <?php 
     include '../classes/database.php';
-    // session_start();
+    if ( !isset( $_SESSION ) ){
+        session_start();
+    } 
     
     class Usuario extends Database{
 
@@ -18,7 +20,7 @@
                         $apellidos = '';
                         $clave = '';
                         $email = '';
-                        $gender = '';
+                        $genero = '';
                         $id_rol = '';
                     }else{
                         $button_label = 'Actualizar';
@@ -112,6 +114,10 @@
                 case 'delete':
                     $this->delete();
                     break;
+                // Acciones del usuario no administrador
+                case 'update_profile':
+                    $this->update_profile();
+                    break;
                 default:
                     # code...
                     break;
@@ -151,6 +157,47 @@
 
             $this->do_query($update_rol_query, $params);
             $this->read();
+        }
+
+        function update_profile(){
+            $id_usuario = $_SESSION['user_id'];
+            $nombres = $_POST['nombres'];
+            $apellidos = $_POST['apellidos'];
+            $clave = $_POST['clave'];
+            // $genero = $_POST['genero'];
+
+            // switch ($genero) {
+            //     case 'm':
+            //         $genero = 2;
+            //         break;
+            //     case 'h':
+            //         $genero = 1;
+            //         break;
+            //     case 'o':
+            //         $genero = 3;
+            //         break;
+            // }
+
+            if( is_file( $_FILES['foto_perfil']["tmp_name"] ) ){
+                $file_extension = explode('.', $_FILES['foto_perfil']["name"]);
+                $true_file_extension = $file_extension[ count($file_extension)-1 ];
+
+                move_uploaded_file( 
+                    $_FILES['foto_perfil']["tmp_name"], 
+                    '../images/users/'.$_SESSION['user_id'].'.'.$true_file_extension 
+                );
+
+                $update_profile_picture = 'UPDATE usuario SET foto = :foto WHERE id_usuario = :id_usuario;';
+                $params = [ ':foto' => $true_file_extension, ':id_usuario' => $id_usuario ];
+                $this->do_query($update_profile_picture, $params);
+            }
+
+            $update_user_query = '
+                UPDATE usuario SET nombres = :nombres, apellidos = :apellidos, clave = :clave WHERE id_usuario = :id_usuario;';
+            $params = [':nombres' => $nombres, ':apellidos' => $apellidos, ':clave' => $clave, ':id_usuario' => $id_usuario];
+
+            $this->do_query($update_user_query, $params);
+            header("location: ../user/index.php");
         }
 
 
@@ -229,11 +276,11 @@
     }
 
 
-    $roleObject = new Usuario();
+    $userObject = new Usuario();
     if ( isset($_REQUEST['action']) ){
         $action_case = $_REQUEST['action'];
-        echo $roleObject->action( $action_case );
+        echo $userObject->action( $action_case );
     }else{
-        echo $roleObject->action('read');
+        echo $userObject->action('read');
     }
 ?>
