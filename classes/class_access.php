@@ -105,9 +105,9 @@
                         }
                         $insert_user_query = '
                             INSERT INTO usuario ( id_rol, id_genero, nombres, apellidos, clave, email ) 
-                            VALUES ( 2, 3, :name, :last_name, :pswd, :email );';
+                            VALUES ( 2, :id_genero, :name, :last_name, :pswd, :email );';
         
-                        $params = [':name' => $name, ':last_name' => $last_name,':pswd' => $pswd, ':email' => $email,];
+                        $params = [':id_genero' => $gender , ':name' => $name, ':last_name' => $last_name,':pswd' => $pswd, ':email' => $email,];
                         $this->do_query($insert_user_query, $params);
         
                         if($this->query_results_num == 1){

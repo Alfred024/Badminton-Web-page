@@ -15,12 +15,14 @@
                         $button_label = 'Crear';
                         $method_name = 'create';
                         $id_marca = '';
+                        $id_equipo = '';
                         $no_serie = '';
                         $descripcion = '';
                     }else{
                         $button_label = 'Actualizar';
                         $method_name = 'update';
                         $id_marca = $_REQUEST['id_marca'];
+                        $id = $_REQUEST['id_equipo'];
                         $no_serie = $_REQUEST['no_serie'];
                         $descripcion = $_REQUEST['descripcion'];
                     }
@@ -100,16 +102,14 @@
         }
 
         function update(){
+            $id = $_REQUEST['id_equipo'];
             $id_marca = $_POST['id_marca'];
-            // $no_serie = $_POST['no_serie'];
+            $no_serie = $_POST['no_serie'];
             $descripcion = $_POST['descripcion'];
             
-            // $update_equipo_query = '
-            //     UPDATE equipo SET id_marca = :id_marca, no_serie = :no_serie, descripcion = :descripcion;';
-            // $params = [ ':id_marca' => $id_marca, ':no_serie' => $no_serie, ':descripcion' => $descripcion ];
             $update_equipo_query = '
-                UPDATE equipo SET id_marca = :id_marca, descripcion = :descripcion;';
-            $params = [ ':id_marca' => $id_marca, ':descripcion' => $descripcion ];
+                UPDATE equipo SET id_marca = :id_marca, descripcion = :descripcion, no_serie = :no_serie WHERE id_equipo = :id_equipo;';
+            $params = [ ':id_equipo' => $id,':id_marca' => $id_marca, ':descripcion' => $descripcion, ':no_serie' => $no_serie, ];
 
             $this->do_query($update_equipo_query, $params);
             $this->read();
@@ -146,8 +146,7 @@
             foreach($this->query_results as $register){
                 $result .= "
                     <tr>
-                        <th class='text-center'> ".$register['id_equipo']." </th>
-                        
+                        <td class='text-center'> ".$register['id_equipo']." </td>
                         ". ( $this->td_field('marca', 'id_marca', 'marca', $register['id_marca'] ) ) ."
 
                         <td class='text-center'> ".$register['no_serie']." </td>

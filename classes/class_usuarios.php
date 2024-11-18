@@ -149,13 +149,14 @@
             $email = $_POST['email'];
             $clave = $_POST['clave'];
             $id_usuario = $_POST['id_usuario'];
-            
-            $update_rol_query = '
-                UPDATE usuario SET nombres = :nombres, apellidos = :apellidos, email = :email, clave = :clave   
+            $genero = $_REQUEST['id_genero'];
+           
+            $update_user_query = '
+                UPDATE usuario SET id_genero = :id_genero, nombres = :nombres, apellidos = :apellidos, email = :email, clave = :clave   
                 WHERE id_usuario = :id_usuario;';
-            $params = [':nombres' => $nombres, ':apellidos' => $apellidos, ':email' => $email, ':clave' => $clave, ':id_usuario' => $id_usuario];
+            $params = [':id_genero' => $genero, ':nombres' => $nombres, ':apellidos' => $apellidos, ':email' => $email, ':clave' => $clave, ':id_usuario' => $id_usuario];
 
-            $this->do_query($update_rol_query, $params);
+            $this->do_query($update_user_query, $params);
             $this->read();
         }
 
