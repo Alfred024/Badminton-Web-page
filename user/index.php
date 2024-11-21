@@ -9,7 +9,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipos de Bádminton</title>
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/jquery-confirm.css">
+    <!-- JS -->
+    <script src="../js/lib/jquery-3.7.1.min.js"></script>
+    <script src="../js/lib/jquery-confirm.js"></script>
 </head>
 <body class="vh-100">
     <div class="container-fluid vh-100">
@@ -67,6 +73,13 @@
             </main>
         </div>
     </div>
+
+    <script>
+        $.alert({
+            'title': 'Título',
+            'content': 'Este es un contenido.',
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
