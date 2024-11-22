@@ -101,12 +101,14 @@
 
             $result = '
             <div class="d-flex justify-content-end mb-3">
-                <form method="POST">
-                    <button class="btn btn-success btn-sm" title="Agregar nuevo rol">
-                        <i class="bi bi-plus-lg"></i> Agregar Rol
-                    </button>
+                <button 
+                    onclick="return roles(\'formNew\');"
+                    class="btn btn-success btn-sm" title="Agregar nuevo rol">
+                    <i class="bi bi-plus-lg"></i> Agregar Rol
+                </button>
+                <!-- <form method="POST">
                     <input type="hidden" name="action" value="formNew">
-                </form>
+                </form> -->
             </div>
 
             <div class="table-responsive">
@@ -133,11 +135,22 @@
                                     <input type='hidden' name='role' value=".$register['rol'].">
                                     <input type='hidden' name='id_rol' value=".$register['id_rol'].">
                                 </form>
-                                <form method='POST' class='btn btn-danger'>
+
+                                <!-- <form 
+                                    id='form_delete'
+                                    method='POST' 
+                                    class='btn btn-danger' 
+                                    onclick='return custom_confirm(\" ¿Segur@ de querer borrar? \")'
+                                >
                                     <input type='image' class='svg-white' style='width: 30px;' src='../images/icons/delete.svg' alt='Delete icon' srcset=''>
                                     <input type='hidden' name='action' value='delete'>
                                     <input type='hidden' name='id_rol' value=".$register['id_rol'].">
-                                </form>
+                                </form> -->
+
+                                <input type='image' 
+                                    onclick='return roles(\"delete\");'
+                                    class='svg-white' style='width: 30px;' 
+                                    src='../images/icons/delete.svg' alt='Delete icon' srcset=''>
                             </div>
                         </td>
                     </tr>";

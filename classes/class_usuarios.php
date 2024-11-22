@@ -191,6 +191,7 @@
                 $update_profile_picture = 'UPDATE usuario SET foto = :foto WHERE id_usuario = :id_usuario;';
                 $params = [ ':foto' => $true_file_extension, ':id_usuario' => $id_usuario ];
                 $this->do_query($update_profile_picture, $params);
+                $_SESSION['photo'] = $true_file_extension; 
             }
 
             $update_user_query = '

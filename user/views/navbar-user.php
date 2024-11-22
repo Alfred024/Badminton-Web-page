@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <form method="post" action="./profile.php" class="w-50 mx-auto">
+                <form method="post" action="./profile.php" class="px-2">
                     <button type="submit" class="nav-link active">Perfil</button>
                     <!-- <a class="nav-link active" aria-current="page">
                         <i class="bi bi-house-door-fill me-2"></i>Perfil
