@@ -27,7 +27,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <form method="POST" >
+                                <form method="POST" id="formRole">
                                 '. (isset($id) ? "<input type='hidden' name='id_rol' value=".$id.">" : "") .'
 
                                     <div class="form-group">
@@ -38,7 +38,9 @@
                                         <input id="role_name" name="rol" type="text" class="form-control" value="'.$rol.'"/>
                                     </div>
                                     <div class="d-flex justify-content-end mt-4">
-                                        <button type="submit" class="btn bg-blue text-white">
+                                        <button 
+                                            onclick="return roles(\'create\')" 
+                                            class="btn bg-blue text-white">
                                             '.$button_label.'
                                         </button>
                                     </div>
@@ -48,7 +50,7 @@
                         </div>
                     </div>
                     ';
-                    echo $form;
+                    return $form;
                 break;
                 case 'create':
                     $this->create();
@@ -69,7 +71,6 @@
         }
 
         function create(){
-            // echo ' VAMOS A HACER UN INSERT ';
             $rol = $_POST['rol'];
             $insert_rol_query = '
                 INSERT INTO rol ( rol ) 
@@ -100,19 +101,17 @@
             $this->get_query($get_user_query);
 
             $result = '
+            <div id ="RolesTableContainer">
             <div class="d-flex justify-content-end mb-3">
                 <button 
                     onclick="return roles(\'formNew\');"
                     class="btn btn-success btn-sm" title="Agregar nuevo rol">
                     <i class="bi bi-plus-lg"></i> Agregar Rol
                 </button>
-                <!-- <form method="POST">
-                    <input type="hidden" name="action" value="formNew">
-                </form> -->
             </div>
 
             <div class="table-responsive">
-            <table class="table table-striped table-hover shadow-sm">
+            <table id="tableRoleData" class="table table-striped table-hover shadow-sm">
                 <thead class="table-primary text-center">
                     <tr>
                         <th scope="col">Id</th>
@@ -129,26 +128,13 @@
                         <td class='text-center'> ".$register['rol']." </td>
                         <td class='text-center'>
                             <div class='d-flex justify-content-center gap-2'>
-                                <form method='POST' class='btn btn-primary'>
-                                    <input type='image' class='svg-white' style='width: 25px;' src='../images/icons/edit-button.svg' alt='Edit icon' srcset=''>
-                                    <input type='hidden' name='action' value='formEdit'>
-                                    <input type='hidden' name='role' value=".$register['rol'].">
-                                    <input type='hidden' name='id_rol' value=".$register['id_rol'].">
-                                </form>
-
-                                <!-- <form 
-                                    id='form_delete'
-                                    method='POST' 
-                                    class='btn btn-danger' 
-                                    onclick='return custom_confirm(\" ¿Segur@ de querer borrar? \")'
-                                >
-                                    <input type='image' class='svg-white' style='width: 30px;' src='../images/icons/delete.svg' alt='Delete icon' srcset=''>
-                                    <input type='hidden' name='action' value='delete'>
-                                    <input type='hidden' name='id_rol' value=".$register['id_rol'].">
-                                </form> -->
+                                <input type='image' 
+                                    onclick='return roles(\"formEdit\", ".$register['id_rol'].", \"".$register['rol']."\");'
+                                    class='svg-white' style='width: 30px;' 
+                                    src='../images/icons/edit-button.svg' alt='Delete icon' srcset=''>
 
                                 <input type='image' 
-                                    onclick='return roles(\"delete\");'
+                                    onclick='return roles(\"delete\", \"".$register['id_rol']."\");'
                                     class='svg-white' style='width: 30px;' 
                                     src='../images/icons/delete.svg' alt='Delete icon' srcset=''>
                             </div>
@@ -158,13 +144,14 @@
             $result .= '
                 </tbody>
             </table>
+            </div>
             </div>';
 
             echo $result;
         }
 
         function delete(){
-            $id_rol = $_REQUEST['id_rol']; 
+            $id_rol = $_REQUEST['id_rol'];
             $delete_rol_query = 'DELETE FROM rol WHERE id_rol = :id_rol;';
             $params = [':id_rol' => $id_rol,];
             $this->do_query($delete_rol_query, $params);
@@ -175,7 +162,7 @@
 
 
     $roleObject = new Role();
-    if ( isset($_REQUEST['action']) ){
+    if ( isset( $_REQUEST['action'] ) ){
         $action_case = $_REQUEST['action'];
         echo $roleObject->action( $action_case );
     }else{
