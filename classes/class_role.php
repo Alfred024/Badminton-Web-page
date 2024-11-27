@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="d-flex justify-content-end mt-4">
                                         <button 
-                                            onclick="return roles(\'create\')" 
+                                            onclick="return roles(\''.$method_name.'\')" 
                                             class="btn bg-blue text-white">
                                             '.$button_label.'
                                         </button>

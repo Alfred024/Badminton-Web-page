@@ -47,6 +47,23 @@ function roles(action) {
             });
             break;
         case 'update':
+            dataSerailized = $('#formRole').serialize()+`action=update`;
+
+            $.ajax({
+                url: "../classes/class_role.php",
+                type: "post",
+                dataType: "html",
+                data: dataSerailized,
+                beforeSend: function () {
+                    $('#tableRoleData').html('<div class="w-100 d-flex justify-content-center"><span class="loader"></span></div>');
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (htmlResponse) {
+                    ventFrame.close();
+                },
+            });
             break;
         case 'read':
             break;
